@@ -4,6 +4,16 @@
 	"description": "Minecraft Bedrock Addon Compiler",
 	"author": "Lucked Coronet",
 	"license": "MIT",
+	"files": [
+		"src",
+		"dist"
+	],
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./dist/api.js"
+		}
+	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"format": "prettier --write ."
