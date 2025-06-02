@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"target": "es2022",
+		"lib": ["es2022"],
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"moduleDetection": "force",
+		"rootDir": "src",
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"checkJs": true,
+		"skipLibCheck": true,
+		"outDir": "dist",
+		"newLine": "lf",
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"stripInternal": true,
+		"noEmitOnError": true,
+
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["src/**/*.test.*", "src/**/*.spec.*", "node_modules"]
+}
