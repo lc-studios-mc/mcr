@@ -19,6 +19,9 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc",
+		"build:watch": "tsc --watch",
+		"prepare": "pnpm run build",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
