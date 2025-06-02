@@ -9,6 +9,9 @@
 		"dist"
 	],
 	"type": "module",
+	"bin": {
+		"mcr": "./dist/cli.js"
+	},
 	"exports": {
 		".": {
 			"default": "./dist/api.js"
