@@ -5,7 +5,8 @@
 	"author": "Lucked Coronet",
 	"license": "MIT",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"format": "prettier --write ."
 	},
 	"dependencies": {
 		"fs-extra": "^11.3.0"
