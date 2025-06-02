@@ -1,0 +1,10 @@
+{
+	"name": "@lc-studios-mc/mcr",
+	"version": "0.1.0",
+	"description": "Minecraft Bedrock Addon Compiler",
+	"author": "Lucked Coronet",
+	"license": "MIT",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	}
+}
