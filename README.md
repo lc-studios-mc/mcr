@@ -7,7 +7,7 @@ A Minecraft Bedrock addon compiler, currently written for internal use only with
 Install:
 
 ```
-pnpm install @lc-studios-mc/mcr
+pnpm install github:lc-studios-mc/mcr
 ```
 
 Use:
