@@ -25,7 +25,8 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"fs-extra": "^11.3.0"
+		"fs-extra": "^11.3.0",
+		"zod": "^3.25.56"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.4",
