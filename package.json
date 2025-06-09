@@ -27,6 +27,7 @@
 	},
 	"dependencies": {
 		"@commander-js/extra-typings": "^14.0.0",
+		"chokidar": "^4.0.3",
 		"commander": "^14.0.0",
 		"cosmiconfig": "^9.0.0",
 		"esbuild": "^0.25.5",
