@@ -22,6 +22,7 @@ export interface BPBuildOptions extends z.infer<typeof BPBuildOptionsSchema> {}
 
 export const RPBuildOptionsSchema = z.object({
 	...BasePackBuildOptions.shape,
+	generateTextureList: z.boolean().optional(),
 });
 
 export interface RPBuildOptions extends z.infer<typeof RPBuildOptionsSchema> {}

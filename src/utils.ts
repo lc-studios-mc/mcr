@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import fs from "fs-extra";
 import { homedir } from "node:os";
 import path from "node:path";
@@ -51,6 +52,11 @@ export function getCurrentTimeString(): string {
 	const formattedTime = `[${hours}:${minutes}:${seconds}.${milliseconds}]`;
 
 	return formattedTime;
+}
+
+/** @internal */
+export function dimmedTimeString(): string {
+	return chalk.dim(getCurrentTimeString());
 }
 
 /** @internal */
