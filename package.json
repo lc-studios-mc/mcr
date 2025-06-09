@@ -22,6 +22,7 @@
 		"build": "tsc",
 		"build:watch": "tsc --watch",
 		"prepare": "tsc",
+		"clean": "shx rm -rf dist",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
