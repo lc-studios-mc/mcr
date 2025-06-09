@@ -13,5 +13,5 @@ pnpm install github:lc-studios-mc/mcr
 Use:
 
 ```
-pnpm exec mcr --version
+pnpm exec mcr --help
 ```
