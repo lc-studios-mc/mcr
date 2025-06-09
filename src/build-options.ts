@@ -1,27 +1,31 @@
 import { z } from "zod/v4";
 
-const BasePackBuildOptionsSchema = z.object({
-	srcDir: z.string(),
-	outDir: z.string(),
+const SharedOptionsSchema = z.object({
 	include: z.array(z.string()).optional(),
 	exclude: z.array(z.string()).optional(),
+	removeOrphans: z.boolean().optional(),
+});
+
+const BasePackBuildOptions = z.object({
+	...SharedOptionsSchema.shape,
+	srcDir: z.string(),
+	outDir: z.string(),
 });
 
 export const BPBuildOptionsSchema = z.object({
-	...BasePackBuildOptionsSchema.shape,
+	...BasePackBuildOptions.shape,
 });
 
 export interface BPBuildOptions extends z.infer<typeof BPBuildOptionsSchema> {}
 
 export const RPBuildOptionsSchema = z.object({
-	...BasePackBuildOptionsSchema.shape,
+	...BasePackBuildOptions.shape,
 });
 
 export interface RPBuildOptions extends z.infer<typeof RPBuildOptionsSchema> {}
 
 export const BuildOptionsSchema = z.object({
-	include: z.array(z.string()).optional(),
-	exclude: z.array(z.string()).optional(),
+	...SharedOptionsSchema.shape,
 	bp: BPBuildOptionsSchema.optional(),
 	rp: RPBuildOptionsSchema.optional(),
 });
