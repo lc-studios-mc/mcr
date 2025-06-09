@@ -6,6 +6,19 @@ import { getCurrentTimeString } from "./utils.js";
 import chalk from "chalk";
 
 /** @internal */
+export function createIncludePatterns(packOpts: BPBuildOptions | RPBuildOptions, opts: BuildOptions): string[] {
+	let includePatterns: string[];
+
+	if (packOpts.include !== undefined || opts.include !== undefined) {
+		includePatterns = [...(packOpts.include ?? []), ...(opts.include ?? [])];
+	} else {
+		includePatterns = ["**/*"];
+	}
+
+	return includePatterns;
+}
+
+/** @internal */
 export async function initialPackSync(
 	include: string[],
 	exclude: string[],
