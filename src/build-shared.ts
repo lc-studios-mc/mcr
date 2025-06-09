@@ -14,17 +14,14 @@ export async function initialPackSync(
 ): Promise<void> {
 	await fs.ensureDir(packOpts.outDir);
 
-	const globInclude = [...include, ...(packOpts.include ?? [])];
-	const globExclude = [...exclude, ...(packOpts.exclude ?? [])];
-
-	const initialSrcEntries = await glob(globInclude, {
+	const initialSrcEntries = await glob(include, {
 		cwd: packOpts.srcDir,
-		ignore: globExclude,
+		ignore: exclude,
 	});
 
-	const initialOutEntries = await glob(globInclude, {
+	const initialOutEntries = await glob(include, {
 		cwd: packOpts.outDir,
-		ignore: globExclude,
+		ignore: exclude,
 	});
 	const orphanedOutEntries = initialOutEntries.filter((x) => !initialSrcEntries.includes(x));
 

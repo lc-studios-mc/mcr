@@ -5,5 +5,7 @@ import { initialPackSync } from "./build-shared.js";
 
 /** @internal */
 export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Promise<void> {
-	await initialPackSync(["**/*"], ["manifest.json"], packOpts, opts);
+	const includePatterns = ["**/*", ...(packOpts.include ?? [])];
+	const excludePatterns = ["manifest.json", ...(packOpts.exclude ?? [])];
+	await initialPackSync(includePatterns, excludePatterns, packOpts, opts);
 }
