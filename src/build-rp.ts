@@ -6,9 +6,10 @@ import type { BuildOptions, RPBuildOptions } from "./build-options.js";
 import {
 	addBasicPackSyncWatcherEventListeners,
 	createBasePackSyncWatcherOpts,
+	generatePackManifestJson,
 	initialPackSync,
 } from "./build-shared.js";
-import { dimmedTimeString, waitForCondition } from "./utils.js";
+import { debounce, dimmedTimeString, waitForCondition } from "./utils.js";
 import { minimatch } from "minimatch";
 
 /** @internal */
@@ -24,6 +25,8 @@ export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Pro
 
 	const { initialSrcEntries } = await initialPackSync(includePatterns, excludePatterns, packOpts, opts);
 
+	await generatePackManifestJson(packOpts);
+
 	const texListEntries: string[] = [];
 
 	if (packOpts.generateTextureList) {
@@ -36,8 +39,13 @@ export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Pro
 		const contents = texListEntries.map((x) => x.replaceAll("\\", "/"));
 		const json = JSON.stringify(contents, null, 2);
 		const destPath = path.join(packOpts.outDir, "textures/texture_list.json");
+
 		await fs.outputFile(destPath, json, { encoding: "utf8" });
+
+		console.log(dimmedTimeString(), `(Re-)Generated texture_list.json at ${destPath.replaceAll("\\", "/")}`);
 	};
+
+	const generateTexListFileDebounced = debounce(generateTexListFile, 500);
 
 	await generateTexListFile();
 
@@ -60,7 +68,7 @@ export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Pro
 			texListEntries.push(texFilePath);
 		}
 
-		generateTexListFile();
+		generateTexListFileDebounced();
 	});
 
 	process.once("SIGINT", async () => {

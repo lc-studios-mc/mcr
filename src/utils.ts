@@ -69,3 +69,23 @@ export function waitForCondition(conditionFn: () => boolean, interval = 100): Pr
 		}, interval);
 	});
 }
+
+/** @internal */
+export function debounce<T extends (...args: any[]) => any>(
+	callback: T,
+	delay: number,
+): (...args: Parameters<T>) => void {
+	let timeoutId: NodeJS.Timeout | null = null;
+
+	return (...args: Parameters<T>) => {
+		// Clear the previous timeout if it exists
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+
+		// Set a new timeout
+		timeoutId = setTimeout(() => {
+			callback(...args);
+		}, delay);
+	};
+}

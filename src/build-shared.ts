@@ -59,6 +59,13 @@ export async function initialPackSync(
 }
 
 /** @internal */
+export async function generatePackManifestJson(packOpts: BPBuildOptions | RPBuildOptions): Promise<void> {
+	const filePath = path.join(packOpts.outDir, "manifest.json");
+	const json = JSON.stringify(packOpts.manifest, null, 2);
+	await fs.outputFile(filePath, json, { encoding: "utf8" });
+}
+
+/** @internal */
 export function createBasePackSyncWatcherOpts(
 	include: string[],
 	exclude: string[],

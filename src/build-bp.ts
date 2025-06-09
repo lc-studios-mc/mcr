@@ -4,6 +4,7 @@ import type { BPBuildOptions, BuildOptions } from "./build-options.js";
 import {
 	addBasicPackSyncWatcherEventListeners,
 	createBasePackSyncWatcherOpts,
+	generatePackManifestJson,
 	initialPackSync,
 } from "./build-shared.js";
 import { dimmedTimeString, waitForCondition } from "./utils.js";
@@ -19,6 +20,8 @@ export async function buildBp(packOpts: BPBuildOptions, opts: BuildOptions): Pro
 	];
 
 	await initialPackSync(includePatterns, excludePatterns, packOpts, opts);
+
+	await generatePackManifestJson(packOpts);
 
 	if (!(packOpts.watch ?? opts.watch)) return;
 

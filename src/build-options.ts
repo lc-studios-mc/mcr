@@ -9,7 +9,7 @@ const BasePackBuildOptions = z.object({
 	...SharedOptionsSchema.shape,
 	srcDir: z.string(),
 	outDir: z.string(),
-	manifest: z.string(),
+	manifest: z.any(),
 	include: z.array(z.string()).optional(),
 	exclude: z.array(z.string()).optional(),
 });
