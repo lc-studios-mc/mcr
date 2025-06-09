@@ -3,6 +3,7 @@ import { glob } from "glob";
 import path from "node:path";
 import type { BPBuildOptions, BuildOptions, RPBuildOptions } from "./build-options.js";
 import { getCurrentTimeString } from "./utils.js";
+import chalk from "chalk";
 
 /** @internal */
 export async function initialPackSync(
@@ -50,5 +51,5 @@ export async function initialPackSync(
 		await fs.copyFile(srcPath, outPath);
 	}
 
-	console.log(getCurrentTimeString(), `Initial file system sync of ${packOpts.srcDir} completed.`);
+	console.log(chalk.gray(getCurrentTimeString()), `Initial file system sync of ${packOpts.srcDir} completed.`);
 }
