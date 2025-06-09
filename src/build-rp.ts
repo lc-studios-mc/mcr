@@ -2,19 +2,18 @@ import chokidar from "chokidar";
 import fs from "fs-extra";
 import path from "node:path";
 import type { RPBuildOptions, BuildOptions } from "./build-options.js";
-import { createIncludePatterns, initialPackSync } from "./build-shared.js";
+import { initialPackSync } from "./build-shared.js";
 import chalk from "chalk";
 import { getCurrentTimeString, waitForCondition } from "./utils.js";
 import { minimatch } from "minimatch";
 
 /** @internal */
 export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Promise<void> {
-	const includePatterns = createIncludePatterns(packOpts, opts);
+	const includePatterns = packOpts.include ?? ["**/*"];
 
 	const excludePatterns = [
 		"manifest.json", // manifest.json will be generated
 		...(packOpts.exclude ?? []),
-		...(opts.exclude ?? []),
 	];
 
 	await initialPackSync(includePatterns, excludePatterns, packOpts, opts);
@@ -23,13 +22,22 @@ export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Pro
 
 	const watcher = chokidar.watch(".", {
 		cwd: packOpts.srcDir,
+		persistent: true,
 		awaitWriteFinish: {
 			stabilityThreshold: 300,
 			pollInterval: 100,
 		},
 		atomic: 100,
 		ignoreInitial: true,
-		ignored: (filePath) => excludePatterns.some((pattern) => minimatch(filePath, pattern)),
+		ignored: (srcPath) => {
+			if (path.resolve(srcPath) === path.resolve(packOpts.srcDir)) return false;
+
+			const srcDirRelativePath = path.relative(packOpts.srcDir, srcPath);
+			return (
+				includePatterns.some((pattern) => minimatch(srcDirRelativePath, pattern)) &&
+				!excludePatterns.some((pattern) => minimatch(srcDirRelativePath, pattern))
+			);
+		},
 	});
 
 	watcher.on("all", (event, filePath) => {

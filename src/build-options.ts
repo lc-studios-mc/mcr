@@ -1,8 +1,6 @@
 import { z } from "zod/v4";
 
 const SharedOptionsSchema = z.object({
-	include: z.array(z.string()).optional(),
-	exclude: z.array(z.string()).optional(),
 	removeOrphans: z.boolean().optional(),
 	watch: z.boolean().optional(),
 });
@@ -12,6 +10,8 @@ const BasePackBuildOptions = z.object({
 	srcDir: z.string(),
 	outDir: z.string(),
 	manifest: z.string(),
+	include: z.array(z.string()).optional(),
+	exclude: z.array(z.string()).optional(),
 });
 
 export const BPBuildOptionsSchema = z.object({
