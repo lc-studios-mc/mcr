@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { buildBpScripts } from "./build-bp-scripts.js";
 import { buildBp } from "./build-bp.js";
 import { replaceComMojangInBuildOptions, type BuildOptions } from "./build-options.js";
@@ -21,4 +22,8 @@ export async function build(options: BuildOptions): Promise<void> {
 	}
 
 	await Promise.allSettled(buildPackPromises);
+
+	if (!options.watch) {
+		console.log(chalk.green("Build finished!"));
+	}
 }

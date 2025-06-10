@@ -99,3 +99,30 @@ export function debounce<T extends (...args: any[]) => any>(
 		}, delay);
 	};
 }
+
+/** @internal */
+export function isObject(item: unknown): item is Record<string, any> {
+	return (item && typeof item === "object" && !Array.isArray(item) && item !== null) === true;
+}
+
+/** @internal */
+export function deepMerge<T extends Record<string, any>, U extends Record<string, any>>(target: T, source: U): T & U {
+	const result = { ...target } as T & U;
+
+	for (const key in source) {
+		if (source.hasOwnProperty(key)) {
+			const sourceValue = source[key];
+			const targetValue = result[key as keyof T];
+
+			if (isObject(targetValue) && isObject(sourceValue)) {
+				// Recursively merge nested objects
+				(result as any)[key] = deepMerge(targetValue, sourceValue);
+			} else {
+				// Source value overwrites target value
+				(result as any)[key] = sourceValue;
+			}
+		}
+	}
+
+	return result;
+}
