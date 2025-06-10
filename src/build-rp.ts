@@ -49,7 +49,7 @@ export async function buildRp(packOpts: RPBuildOptions, opts: BuildOptions): Pro
 
 	await generateTexListFile();
 
-	if (!(packOpts.watch ?? opts.watch)) return;
+	if (!opts.watch) return;
 
 	const watcher = chokidar.watch(".", createBasePackSyncWatcherOpts(includePatterns, excludePatterns, packOpts));
 	addBasicPackSyncWatcherEventListeners(watcher, packOpts);

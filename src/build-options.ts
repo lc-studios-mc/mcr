@@ -2,13 +2,7 @@ import { z } from "zod/v4";
 import { getComMojangDir } from "./utils.js";
 import path from "node:path";
 
-const SharedOptionsSchema = z.object({
-	removeOrphans: z.boolean().optional(),
-	watch: z.boolean().optional(),
-});
-
 const BasePackBuildOptions = z.object({
-	...SharedOptionsSchema.shape,
 	srcDir: z.string(),
 	outDir: z.string(),
 	manifest: z.any(),
@@ -42,10 +36,11 @@ export const RPBuildOptionsSchema = z.object({
 export interface RPBuildOptions extends z.infer<typeof RPBuildOptionsSchema> {}
 
 export const BuildOptionsSchema = z.object({
-	...SharedOptionsSchema.shape,
 	bp: BPBuildOptionsSchema.optional(),
 	rp: RPBuildOptionsSchema.optional(),
 	comMojangBeta: z.boolean().optional(),
+	removeOrphans: z.boolean().optional(),
+	watch: z.boolean().optional(),
 });
 
 export interface BuildOptions extends z.infer<typeof BuildOptionsSchema> {

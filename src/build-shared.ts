@@ -27,7 +27,7 @@ export async function initialPackSync(
 	});
 	const orphanedOutEntries = initialOutEntries.filter((x) => !initialSrcEntries.includes(x));
 
-	if (packOpts.removeOrphans ?? opts.removeOrphans) {
+	if (opts.removeOrphans) {
 		for (const entry of orphanedOutEntries) {
 			const outPath = path.join(packOpts.outDir, entry);
 			await fs.rm(outPath, { force: true, recursive: true });

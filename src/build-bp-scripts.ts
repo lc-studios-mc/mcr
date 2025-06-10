@@ -91,7 +91,7 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 
 	let ctx: esbuild.BuildContext | undefined = undefined;
 
-	if (packOpts.watch ?? opts.watch) {
+	if (opts.watch) {
 		ctx = await esbuild.context(esbuildOpts);
 		ctx.watch();
 
