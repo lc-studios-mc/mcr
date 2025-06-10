@@ -38,12 +38,7 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 								const data = JSON.parse(outputFile.text);
 								const sources = data.sources as string[];
 
-								data.sources = sources.map((x) => {
-									let filePath = isFileUrl(x) ? fileURLToPath(x) : x;
-									filePath = path.join(destScriptsDir, filePath);
-									filePath = path.relative(srcScriptsDir, filePath);
-									return filePath;
-								});
+								data.sources = sources.map((x) => (isFileUrl(x) ? fileURLToPath(x) : x));
 
 								toWrite = JSON.stringify(data, null, 2);
 							}
@@ -89,7 +84,6 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 		esbuildOpts = {
 			...esbuildOpts,
 			sourcemap: true,
-			sourceRoot: srcScriptsDir,
 		};
 	}
 
