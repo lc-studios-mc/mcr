@@ -18,7 +18,6 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 		absWorkingDir: path.resolve(packOpts.srcDir),
 		format: "esm",
 		platform: "neutral",
-		tsconfig: scriptOpts.tsconfig,
 		banner: scriptOpts.banner,
 		footer: scriptOpts.footer,
 		write: false, // Necessary for custom write plugin below
@@ -76,6 +75,13 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 			entryPoints: ["scripts/**/*"],
 			bundle: false,
 			outdir: destScriptsDir,
+		};
+	}
+
+	if (scriptOpts.tsconfig) {
+		esbuildOpts = {
+			...esbuildOpts,
+			tsconfig: path.resolve(scriptOpts.tsconfig),
 		};
 	}
 
