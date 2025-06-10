@@ -31,6 +31,16 @@ export function dirExists(dirpath: string): boolean {
 }
 
 /** @internal */
+export function isFileUrl(urlString: string) {
+	try {
+		const url = new URL(urlString);
+		return url.protocol === "file:";
+	} catch (e) {
+		return false; // Not a valid URL at all, so not a file URL
+	}
+}
+
+/** @internal */
 export function getComMojangDir(beta?: boolean): string {
 	return path.join(
 		homedir(),

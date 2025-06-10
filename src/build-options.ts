@@ -16,6 +16,18 @@ const BasePackBuildOptions = z.object({
 
 export const BPBuildOptionsSchema = z.object({
 	...BasePackBuildOptions.shape,
+	script: z
+		.object({
+			entryPointRelativeToSrcDir: z.string(),
+			tsconfig: z.string().optional(),
+			bundle: z.boolean().optional(),
+			minify: z.boolean().optional(),
+			external: z.array(z.string()).optional(),
+			sourceMap: z.boolean().optional(),
+			banner: z.record(z.string(), z.string()).optional(),
+			footer: z.record(z.string(), z.string()).optional(),
+		})
+		.optional(),
 });
 
 export interface BPBuildOptions extends z.infer<typeof BPBuildOptionsSchema> {}

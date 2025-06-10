@@ -15,9 +15,10 @@ export async function buildBp(packOpts: BPBuildOptions, opts: BuildOptions): Pro
 
 	const excludePatterns = [
 		"manifest.json", // manifest.json will be generated
-		"scripts/**/*",
 		...(packOpts.exclude ?? []),
 	];
+
+	if (packOpts.script) excludePatterns.push("scripts/**/*");
 
 	await initialPackSync(includePatterns, excludePatterns, packOpts, opts);
 
