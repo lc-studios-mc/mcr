@@ -1,10 +1,12 @@
 import { buildBpScripts } from "./build-bp-scripts.js";
 import { buildBp } from "./build-bp.js";
-import type { BuildOptions } from "./build-options.js";
+import { replaceComMojangInBuildOptions, type BuildOptions } from "./build-options.js";
 import { buildRp } from "./build-rp.js";
 
 export async function build(options: BuildOptions): Promise<void> {
 	const buildPackPromises: Promise<void>[] = [];
+
+	replaceComMojangInBuildOptions(options);
 
 	if (options.bp) {
 		buildPackPromises.push(buildBp(options.bp, options));

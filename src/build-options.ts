@@ -1,4 +1,6 @@
 import { z } from "zod/v4";
+import { getComMojangDir } from "./utils.js";
+import path from "node:path";
 
 const SharedOptionsSchema = z.object({
 	removeOrphans: z.boolean().optional(),
@@ -43,9 +45,25 @@ export const BuildOptionsSchema = z.object({
 	...SharedOptionsSchema.shape,
 	bp: BPBuildOptionsSchema.optional(),
 	rp: RPBuildOptionsSchema.optional(),
+	comMojangBeta: z.boolean().optional(),
 });
 
 export interface BuildOptions extends z.infer<typeof BuildOptionsSchema> {
 	bp?: BPBuildOptions;
 	rp?: RPBuildOptions;
+}
+
+/** @internal */
+export function replaceComMojangInBuildOptions(options: BuildOptions): void {
+	const comMojangDir = getComMojangDir(options.comMojangBeta);
+
+	if (options.bp) {
+		options.bp.srcDir = path.resolve(options.bp.srcDir.replaceAll("<com.mojang>", comMojangDir));
+		options.bp.outDir = path.resolve(options.bp.outDir.replaceAll("<com.mojang>", comMojangDir));
+	}
+
+	if (options.rp) {
+		options.rp.srcDir = path.resolve(options.rp.srcDir.replaceAll("<com.mojang>", comMojangDir));
+		options.rp.outDir = path.resolve(options.rp.outDir.replaceAll("<com.mojang>", comMojangDir));
+	}
 }
