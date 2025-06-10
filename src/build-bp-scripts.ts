@@ -12,7 +12,6 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 
 	if (!scriptOpts) return;
 
-	const srcScriptsDir = path.join(path.resolve(packOpts.srcDir), "scripts");
 	const destScriptsDir = path.join(path.resolve(packOpts.outDir), "scripts");
 
 	let esbuildOpts: esbuild.BuildOptions = {
