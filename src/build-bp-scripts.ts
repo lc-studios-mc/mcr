@@ -45,7 +45,7 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 
 									const relativePath = path.relative(sourceRoot, absPath);
 
-									return relativePath.replaceAll("\\", "/");
+									return relativePath;
 								});
 
 								toWrite = JSON.stringify(data, null, 2);
