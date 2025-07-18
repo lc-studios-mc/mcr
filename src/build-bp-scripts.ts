@@ -12,6 +12,7 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 
 	if (!scriptOpts) return;
 
+	const sourceRoot = path.dirname(path.resolve(packOpts.srcDir, scriptOpts.entryPointRelativeToSrcDir));
 	const destScriptsDir = path.join(path.resolve(packOpts.outDir), "scripts");
 
 	let esbuildOpts: esbuild.BuildOptions = {
@@ -36,7 +37,16 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 								const data = JSON.parse(outputFile.text);
 								const sources = data.sources as string[];
 
-								data.sources = sources.map((x) => (isFileUrl(x) ? fileURLToPath(x) : x));
+								data.sources = sources.map((urlOrPathAbs) => {
+									const absPath = path.resolve(
+										destScriptsDir,
+										isFileUrl(urlOrPathAbs) ? fileURLToPath(urlOrPathAbs) : urlOrPathAbs,
+									);
+
+									const relativePath = path.relative(sourceRoot, absPath);
+
+									return relativePath.replaceAll("\\", "/");
+								});
 
 								toWrite = JSON.stringify(data, null, 2);
 							}
@@ -89,6 +99,7 @@ export async function buildBpScripts(packOpts: BPBuildOptions, opts: BuildOption
 		esbuildOpts = {
 			...esbuildOpts,
 			sourcemap: true,
+			sourceRoot,
 		};
 	}
 
